@@ -54,7 +54,7 @@ public class BookRepositoryMySql implements BookRepository {
             }
         }catch (SQLException e){
             e.printStackTrace();
-        }
+        }//todo service null exception(use find by id in service)
         return null; // nimic gasit
     }
 
@@ -75,7 +75,7 @@ public class BookRepositoryMySql implements BookRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }//todo service for nullexcetion (use find by id in service )
         return null; // update failed
     }
 
@@ -88,6 +88,7 @@ public class BookRepositoryMySql implements BookRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
