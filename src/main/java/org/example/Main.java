@@ -1,28 +1,31 @@
 package org.example;
 
+import javafx.application.Application;
 import org.example.database.JDBConnectionWrapper;
 import org.example.model.Book;
 import org.example.repository.BookRepository;
 import org.example.repository.BookRepositoryMySql;
+import org.example.service.BookService;
+import org.example.service.BookServiceImpl;
+import org.example.view.BookView;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         JDBConnectionWrapper wrapper  = new JDBConnectionWrapper("_library");
+        Connection connection = wrapper.getConnection();
 
-        java.sql.Connection connection = wrapper.getConnection();
+        BookRepository bookRepository = new BookRepositoryMySql(connection); ///dependency injection
+        BookService bookService = new BookServiceImpl(bookRepository);
 
-        /// Crete new book,
-        BookRepository bookRepository = new BookRepositoryMySql(connection);
-        Book book = new Book(1, "Book 1", "Author 1", LocalDate.now(), 1);
-        bookRepository.createBook(book);
-        ///  out all books
-        bookRepository.read().forEach(System.out::println);
-
+        BookView.setBookService(bookService);
+        Application.launch(BookView.class, args);
     }
 }

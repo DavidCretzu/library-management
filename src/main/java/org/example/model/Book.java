@@ -16,6 +16,12 @@ public class Book {
         this.publishedDate = publishDate;
         this.number = number;
     }
+    public Book( String title, String author, LocalDate publishDate, int number) {
+        this.title = title;
+        this.author = author;
+        this.publishedDate = publishDate;
+        this.number = number;
+    }
 
     /// getters
     public String getTitle() {

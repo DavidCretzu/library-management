@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'org.example'
@@ -9,11 +11,29 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21) // Use JDK 21
+    }
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
+
+    // MySQL connector
     implementation 'com.mysql:mysql-connector-j:8.4.0'
+    runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
+}
+
+application {
+    // Must point to your JavaFX Application class
+    mainClass = 'org.example.view.BookView'
+}
+
+javafx {
+    version = '21.0.3'                  // JavaFX version
+    modules = [ 'javafx.controls', 'javafx.fxml' ]  // Required JavaFX modules
 }
 
 test {

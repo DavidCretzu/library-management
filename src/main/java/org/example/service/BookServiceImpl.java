@@ -2,15 +2,16 @@ package org.example.service;
 
 import org.example.model.Book;
 import org.example.repository.BookRepository;
+import org.example.repository.BookRepositoryMySql;
 
 import java.util.List;
 
-public class BookServiceImpl  implements Service{
+public class BookServiceImpl  implements BookService {
 
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository; ///injected once not modified
 
     public BookServiceImpl(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+        this.bookRepository = bookRepository; /// dependency injection in main
     }
 
     @Override
@@ -20,11 +21,11 @@ public class BookServiceImpl  implements Service{
 
     @Override
     public Book findById(long id) {
-       if ( bookRepository.findById(id) == null){
-        throw new RuntimeException("Book with id :" + id + " not found");
+        Book book = bookRepository.findById(id);
+       if ( book == null){
+              throw new RuntimeException("Book with id :" + id + " not found");
        }
-
-       return bookRepository.findById(id);
+       return book;
     }
 
     @Override
