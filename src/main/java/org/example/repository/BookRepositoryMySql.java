@@ -75,15 +75,16 @@ public class BookRepositoryMySql implements BookRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }//todo test in main
+        }
         return null; // update failed
     }
 
     @Override
-    public void deleteBook(long id) {
-        String sql = "DELETE FROM Book WHERE id = ?";
+    public void deleteBook(Book book) {
+        String sql = "DELETE FROM Book WHERE title = ? AND author = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, id);
+            stmt.setString(1, book.getTitle());
+            stmt.setString(2, book.getAuthor());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,7 +107,7 @@ public class BookRepositoryMySql implements BookRepository {
                 book.setId(rs.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace(); ///todo test in main
+            e.printStackTrace();
         }
     }
 

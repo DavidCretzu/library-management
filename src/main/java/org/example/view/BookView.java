@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.model.Book;
 import org.example.service.BookService;
@@ -18,13 +19,18 @@ import java.util.List;
 
 public class BookView extends Application {
 
-    private static BookService bookService; // injected from Main
+    private static BookService bookService; ///todo delete
+
+    private TextField idField = new TextField("Auto-Generated Book ID");
+    private  TextField titleField = new TextField();
+    private TextField authorField = new TextField();
+    private DatePicker datePicker =  new DatePicker();
+    private Spinner<Integer> numberSpinner = new Spinner<>(1 , 100000 , 1);
 
     public static void setBookService(BookService service) {
         bookService = service;
     }
-
-    @Override
+    @Override/// todo not use this method , but do a constructor(gets stage )  bookview not extend application .
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Book Viewer");
 
@@ -55,11 +61,7 @@ public class BookView extends Application {
 
         TextField idField = new TextField("Auto-generated");
         idField.setEditable(false);
-
-        TextField titleField = new TextField();
-        TextField authorField = new TextField();
-        DatePicker datePicker = new DatePicker();
-        Spinner<Integer> numberSpinner = new Spinner<>(1, 10000, 1);
+    /// text fields should be defined as attributes of class view , instantiated still here but not declared here
 
         form.add(new Label("ID:"), 0, 0);
         form.add(idField, 1, 0, 2, 1);

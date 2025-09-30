@@ -41,11 +41,11 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
-    public void deleteBook(long id) {
-        if (bookRepository.findById(id) == null) {
-            throw new RuntimeException("Book with id " + id + " not found.");
+    public void deleteBook(Book book) {
+        if (bookRepository.findById(book.getId()) == null) {
+            throw new RuntimeException("Book  " + book.getTitle() + " not found.");
         }
-        bookRepository.deleteBook(id);
+        bookRepository.deleteBook(book);
     }
 
     @Override
