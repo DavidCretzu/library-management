@@ -27,13 +27,12 @@ dependencies {
 }
 
 application {
-    // Must point to your JavaFX Application class
     mainClass = 'org.example.view.BookView'
 }
 
 javafx {
-    version = '21.0.3'                  // JavaFX version
-    modules = [ 'javafx.controls', 'javafx.fxml' ]  // Required JavaFX modules
+    version = '21.0.3'                  // Use a JavaFX version that exists on Maven
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 test {

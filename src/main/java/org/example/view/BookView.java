@@ -1,6 +1,5 @@
 package org.example.view;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,7 +8,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.model.Book;
 import org.example.service.BookService;
@@ -17,25 +15,19 @@ import org.example.service.BookService;
 import java.time.LocalDate;
 import java.util.List;
 
-public class BookView extends Application {
+public class BookView {
 
-    private static BookService bookService; ///todo delete
+    private final TextField idField;
+    private final TextField titleField;
+    private final TextField authorField;
+    private final DatePicker datePicker;
+    private final Spinner<Integer> numberSpinner;
+    private final TableView<Book> tableView;
 
-    private TextField idField = new TextField("Auto-Generated Book ID");
-    private  TextField titleField = new TextField();
-    private TextField authorField = new TextField();
-    private DatePicker datePicker =  new DatePicker();
-    private Spinner<Integer> numberSpinner = new Spinner<>(1 , 100000 , 1);
-
-    public static void setBookService(BookService service) {
-        bookService = service;
-    }
-    @Override/// todo not use this method , but do a constructor(gets stage )  bookview not extend application .
-    public void start(Stage primaryStage) {
+    public BookView(Stage primaryStage, BookService bookService) {
         primaryStage.setTitle("Book Viewer");
 
-        TableView<Book> tableView = new TableView<>();
-
+        tableView = new TableView<>();
         TableColumn<Book, Long> idCol = new TableColumn<>("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -59,22 +51,21 @@ public class BookView extends Application {
         form.setHgap(10);
         form.setVgap(10);
 
-        TextField idField = new TextField("Auto-generated");
+        idField = new TextField("Auto-generated");
         idField.setEditable(false);
-    /// text fields should be defined as attributes of class view , instantiated still here but not declared here
+        titleField = new TextField();
+        authorField = new TextField();
+        datePicker = new DatePicker();
+        numberSpinner = new Spinner<>(1, 100000, 1);
 
         form.add(new Label("ID:"), 0, 0);
         form.add(idField, 1, 0, 2, 1);
-
         form.add(new Label("Title:"), 0, 1);
         form.add(titleField, 1, 1);
-
         form.add(new Label("Author:"), 0, 2);
         form.add(authorField, 1, 2);
-
         form.add(new Label("Published Date:"), 0, 3);
         form.add(datePicker, 1, 3);
-
         form.add(new Label("Number:"), 0, 4);
         form.add(numberSpinner, 1, 4);
 
@@ -86,7 +77,6 @@ public class BookView extends Application {
         buttonBox.setAlignment(Pos.CENTER);
         form.add(buttonBox, 0, 5, 2, 1);
 
-        // Add books from database
         List<Book> books;
         if (bookService != null) {
             books = bookService.read();
@@ -108,4 +98,11 @@ public class BookView extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    public TextField getIdField() { return idField; }
+    public TextField getTitleField() { return titleField; }
+    public TextField getAuthorField() { return authorField; }
+    public DatePicker getDatePicker() { return datePicker; }
+    public Spinner<Integer> getNumberSpinner() { return numberSpinner; }
+    public TableView<Book> getTableView() { return tableView; }
 }
