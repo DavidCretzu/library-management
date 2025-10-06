@@ -9,6 +9,7 @@ public class Book {
     private LocalDate publishedDate;
     private int number ;
 
+    public Book(){};
     public Book(long id, String title, String author, LocalDate publishDate, int number) {
         this.id = id;
         this.title = title;

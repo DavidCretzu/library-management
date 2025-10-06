@@ -29,7 +29,7 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
-    public Book updateBook(Book book, long id) {
+    public Book updateBook(Book book, long id) { /// todo make it boolean to realize if it worked (updated in the database) .
         if ( bookRepository.findById(id) == null){
             throw new RuntimeException("Book with id :" + id + " not found");
         }
@@ -41,7 +41,7 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
-    public void deleteBook(Book book) {
+    public void deleteBook(Book book) { /// todo make it boolean to realize if it worked (deleted in the database) .
         if (bookRepository.findById(book.getId()) == null) {
             throw new RuntimeException("Book  " + book.getTitle() + " not found.");
         }

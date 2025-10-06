@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import org.example.model.Book;
 import org.example.service.BookService;
 import org.example.view.BookView;
-
+import org.example.mapper.BookBuilder;
 import java.time.LocalDate;
 
 public class BookController {
@@ -23,14 +23,20 @@ public class BookController {
         @Override
         public void handle(ActionEvent actionEvent) {
 
-//            Book book  = bookView.getTableView().getSelectionModel().getSelectedItem();
+///           Book book  = bookView.getTableView().getSelectionModel().getSelectedItem();   use for update and delete
 
             String title = bookView.getTitleField();
             String author = bookView.getAuthorField();
             LocalDate publishedDate = bookView.getDatePicker();
             int number = bookView.getNumberSpinner();
 
-            Book book = new Book(title, author, publishedDate, number);///todo inlocuieste constructorul cu un builder .
+            Book book = new BookBuilder()
+                    .setTitle(title)
+                    .setAuthor(author)
+                    .setPublishedDate(publishedDate)
+                    .setNumber(number)
+                    .build(); //Book Builder
+
             boolean savedBook = bookService.createBook(book);
 
             if (savedBook) {
