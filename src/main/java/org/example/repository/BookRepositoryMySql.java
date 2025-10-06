@@ -92,7 +92,7 @@ public class BookRepositoryMySql implements BookRepository {
     }
 
     @Override
-    public void createBook(Book book) {
+    public boolean createBook(Book book) {
         String sql = "INSERT INTO Book (title, author, published_date, number) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, book.getTitle());
@@ -102,13 +102,10 @@ public class BookRepositoryMySql implements BookRepository {
 
             stmt.executeUpdate();
 
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                book.setId(rs.getInt(1));
-            }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
-
 }

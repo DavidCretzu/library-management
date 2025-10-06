@@ -49,7 +49,7 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
-    public void createBook(Book book) {
-        bookRepository.createBook(book);
+    public boolean createBook(Book book) {
+        return bookRepository.createBook(book);
     }
 }

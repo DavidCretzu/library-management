@@ -1,5 +1,9 @@
 package org.example.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,15 +21,20 @@ import java.util.List;
 
 public class BookView {
 
-    private final TextField idField;
-    private final TextField titleField;
-    private final TextField authorField;
-    private final DatePicker datePicker;
+    private TextField idField;
+    private TextField titleField;
+    private TextField authorField;
+    private DatePicker datePicker;
     private final Spinner<Integer> numberSpinner;
     private final TableView<Book> tableView;
+    private Button updateButton;
+    private Button deleteButton;
+    private Button saveButton;
+    private final ObservableList<Book> books;
 
-    public BookView(Stage primaryStage, BookService bookService) {
+    public BookView(Stage primaryStage , List<Book> booksList) {/// no service no logic
         primaryStage.setTitle("Book Viewer");
+        books = FXCollections.observableArrayList(booksList);
 
         tableView = new TableView<>();
         TableColumn<Book, Long> idCol = new TableColumn<>("ID");
@@ -45,6 +54,7 @@ public class BookView {
 
         tableView.getColumns().addAll(idCol, titleCol, authorCol, dateCol, numberCol);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setItems(books);
 
         GridPane form = new GridPane();
         form.setPadding(new Insets(10));
@@ -69,26 +79,13 @@ public class BookView {
         form.add(new Label("Number:"), 0, 4);
         form.add(numberSpinner, 1, 4);
 
-        Button saveButton = new Button("Save");
-        Button updateButton = new Button("Update");
-        Button deleteButton = new Button("Delete");
+        updateButton = new Button("Update");
+        deleteButton = new Button("Delete");
+        saveButton =  new Button("Save");
 
         HBox buttonBox = new HBox(10, saveButton, updateButton, deleteButton);
         buttonBox.setAlignment(Pos.CENTER);
         form.add(buttonBox, 0, 5, 2, 1);
-
-        List<Book> books;
-        if (bookService != null) {
-            books = bookService.read();
-        } else {
-            books = List.of(
-                    new Book("The Hobbit", "J.R.R. Tolkien", LocalDate.of(1937, 9, 21), 5),
-                    new Book("1984", "George Orwell", LocalDate.of(1949, 6, 8), 10),
-                    new Book("Clean Code", "Robert C. Martin", LocalDate.of(2008, 8, 1), 3)
-            );
-        }
-
-        tableView.getItems().addAll(books);
 
         BorderPane root = new BorderPane();
         root.setCenter(tableView);
@@ -97,12 +94,24 @@ public class BookView {
         Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
-    public TextField getIdField() { return idField; }
-    public TextField getTitleField() { return titleField; }
-    public TextField getAuthorField() { return authorField; }
-    public DatePicker getDatePicker() { return datePicker; }
-    public Spinner<Integer> getNumberSpinner() { return numberSpinner; }
+    public void addSaveButtonListener(EventHandler<ActionEvent> saveButtonListener){
+        saveButton.setOnAction(saveButtonListener);
+
+    }
+
+    public void saveBookOl(Book book){
+        this.books.add(book);
+    }
+
+    public int getIdField() { return Integer.parseInt(idField.toString());} ///wrapper classes and primitive(int vs iNTEGER)
+    public String getTitleField() { return titleField.getText(); }
+    public String getAuthorField() { return authorField.getText(); }
+    public LocalDate getDatePicker() { return datePicker.getValue(); }
+    public int getNumberSpinner() { return numberSpinner.getValue(); }
     public TableView<Book> getTableView() { return tableView; }
+
+
 }

@@ -26,15 +26,12 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
 }
 
-application {
-    mainClass = 'org.example.view.BookView'
-}
+application { mainClass = 'org.example.Main' }
 
 javafx {
-    version = '21.0.3'                  // Use a JavaFX version that exists on Maven
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    version = '21.0.3'
+    modules = ['javafx.controls','javafx.fxml']
 }
-
 test {
     useJUnitPlatform()
 }
