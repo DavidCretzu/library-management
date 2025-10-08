@@ -31,7 +31,7 @@ public class BookLauncherSingleton {
         return instance;
     }
 
-    public BookLauncherSingleton(Stage stage){
+    private BookLauncherSingleton(Stage stage){
         JDBConnectionWrapper connectionWrapper = new JDBConnectionWrapper("_library");
         Connection connection = connectionWrapper.getConnection();
 

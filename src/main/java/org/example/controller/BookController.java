@@ -16,10 +16,11 @@ public class BookController {
         this.bookService = bookService;
         this.bookView = bookView;
         this.bookView.addSaveButtonListener(new SaveButtonListener());
+        this.bookView.addDeleteButtonListener(new DeleteButtonListener());
 
     }
 
-    private class SaveButtonListener implements EventHandler<ActionEvent> { /// todo repeat for every button .
+    private class SaveButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent actionEvent) {
 
@@ -44,6 +45,40 @@ public class BookController {
             }
         }
     }
+
+    private class DeleteButtonListener implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Book delBook = bookView.getTableView().getSelectionModel().getSelectedItem();
+
+            bookService.deleteBook(delBook);
+            bookView.deleteBookOl(delBook);
+        }
+    }
+
+//    private class UpdateButtonListener implements EventHandler<ActionEvent>{
+//
+//        @Override
+//        public void handle(ActionEvent actionEvent) {
+//
+//            Book selectedBook = bookView.getTableView().getSelectionModel().getSelectedItem(); ///the book that gets updated
+//
+//            String title = bookView.getTitleField(); /// the book that will replace it (from the user)
+//            String author = bookView.getAuthorField();
+//            LocalDate publishedDate = bookView.getDatePicker();
+//            int number = bookView.getNumberSpinner();
+//
+//            Book book = new BookBuilder() /// Builder DP
+//                    .setTitle(title)
+//                    .setAuthor(author)
+//                    .setPublishedDate(publishedDate)
+//                    .setNumber(number)
+//                    .build();
+//
+//            bookService.updateBook(book , selectedBook.getId());
+//            bookView.updateBookOl(selectedBook , book);
+//        }
+//    }
 
 
 

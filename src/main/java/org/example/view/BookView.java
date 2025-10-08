@@ -102,8 +102,24 @@ public class BookView {
 
     }
 
+    public void addDeleteButtonListener(EventHandler<ActionEvent> deleteButtonListener){
+        deleteButton.setOnAction(deleteButtonListener);
+    }
+
+    public void addUpdateButtonListener(EventHandler<ActionEvent> updateButtonListener){
+        updateButton.setOnAction(updateButtonListener);
+    }
+
     public void saveBookOl(Book book){
         this.books.add(book);
+    }
+
+    public void deleteBookOl(Book book){
+        this.books.remove(book);
+    }
+
+    public void updateBookOl(Book toUpdateBook , Book book){
+        this.books.set(books.indexOf(toUpdateBook) , book);
     }
 
     public int getIdField() { return Integer.parseInt(idField.toString());} ///wrapper classes and primitive(int vs iNTEGER)
