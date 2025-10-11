@@ -29,19 +29,23 @@ public class BookServiceImpl  implements BookService {
     }
 
     @Override
-    public Book updateBook(Book book, long id) { /// todo make it boolean to realize if it worked (updated in the database) .
-        if ( bookRepository.findById(id) == null){
-            throw new RuntimeException("Book with id :" + id + " not found");
+    public Book updateBook(Book book, long id) {
+        if (bookRepository.findById(id) == null) {
+            throw new RuntimeException("Book with id: " + id + " not found.");
         }
-        if (bookRepository.updateBook(book , id) == null){
+
+        Book updatedBook = bookRepository.updateBook(book, id);
+        if (updatedBook == null) {
             throw new RuntimeException("Cannot update book with id: " + id);
         }
 
-        return bookRepository.updateBook(book, id);
+        return updatedBook; // return updated book object
     }
 
+
+
     @Override
-    public void deleteBook(Book book) { /// todo make it boolean to realize if it worked (deleted in the database) .
+    public void deleteBook(Book book) {
         if (bookRepository.findById(book.getId()) == null) {
             throw new RuntimeException("Book  " + book.getTitle() + " not found.");
         }
@@ -50,6 +54,7 @@ public class BookServiceImpl  implements BookService {
 
     @Override
     public boolean createBook(Book book) {
+
         return bookRepository.createBook(book);
     }
 }

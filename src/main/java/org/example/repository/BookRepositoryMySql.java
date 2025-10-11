@@ -70,7 +70,7 @@ public class BookRepositoryMySql implements BookRepository {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                book.setId((int) id);
+                book.setId((int) id);  // ensure book object has the correct id
                 return book;
             }
         } catch (SQLException e) {
@@ -78,6 +78,9 @@ public class BookRepositoryMySql implements BookRepository {
         }
         return null; // update failed
     }
+
+
+
 
     @Override
     public void deleteBook(Book book) {
@@ -100,8 +103,20 @@ public class BookRepositoryMySql implements BookRepository {
             stmt.setDate(3, Date.valueOf(book.getPublishedDate()));
             stmt.setInt(4, book.getNumber());
 
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
 
+            if (affectedRows == 0) {
+                throw new SQLException("Creating book failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedId = generatedKeys.getInt(1);
+                    book.setId(generatedId);
+                } else {
+                    throw new SQLException("Creating book failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

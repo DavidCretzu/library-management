@@ -114,13 +114,23 @@ public class BookView {
         this.books.add(book);
     }
 
-    public void deleteBookOl(Book book){
-        this.books.remove(book);
+    public void deleteBookOl(Book bookToDelete) {
+        books.removeIf(b -> b.getTitle().equals(bookToDelete.getTitle()) &&
+                        b.getAuthor().equals(bookToDelete.getAuthor()));
     }
 
-    public void updateBookOl(Book toUpdateBook , Book book){
-        this.books.set(books.indexOf(toUpdateBook) , book);
+
+    public void updateBookOl(Book oldBook, Book newBook) {
+        // update ObservableList by matching ID
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == oldBook.getId()) {
+                books.set(i, newBook);
+                break;
+            }
+        }
     }
+
+
 
     public int getIdField() { return Integer.parseInt(idField.toString());} ///wrapper classes and primitive(int vs iNTEGER)
     public String getTitleField() { return titleField.getText(); }
