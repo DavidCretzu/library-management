@@ -9,7 +9,7 @@ public interface BookRepository {
     public List<Book> read();
     public Book findById(long id);
     public Book updateBook(Book book , long id);
-    public void deleteBook(Book book);
+    public boolean deleteBook(Book book);
     public boolean createBook(Book book);
-    public void sellBook(long id);
+    public boolean sellBook(long id);
 }

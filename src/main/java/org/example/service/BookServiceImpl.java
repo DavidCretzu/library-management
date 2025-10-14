@@ -45,21 +45,30 @@ public class BookServiceImpl  implements BookService {
 
 
     @Override
-    public void deleteBook(Book book) {
+    public boolean deleteBook(Book book) {
         if (bookRepository.findById(book.getId()) == null) {
             throw new RuntimeException("Book  " + book.getTitle() + " not found.");
         }
-        bookRepository.deleteBook(book);
+        if(bookRepository.deleteBook(book) == true){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean createBook(Book book) {
 
-        return bookRepository.createBook(book);
+        if (bookRepository.createBook(book) == true) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void sellBook(long id){
-        bookRepository.sellBook(id);
+    public boolean sellBook(long id){
+        if (bookRepository.sellBook(id) == true) {
+            return true;
+        }
+        return false;
     }
 }

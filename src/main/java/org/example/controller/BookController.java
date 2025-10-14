@@ -49,8 +49,9 @@ public class BookController {
         public void handle(ActionEvent actionEvent) {
             Book delBook = bookView.getTableView().getSelectionModel().getSelectedItem();
 
-            bookService.deleteBook(delBook);
-            bookView.deleteBookOl(delBook);
+            if(bookService.deleteBook(delBook) == true){
+                bookView.deleteBookOl(delBook);
+            }
         }
     }
 
@@ -82,11 +83,12 @@ public class BookController {
             Book selectedBook = bookView.getTableView().getSelectionModel().getSelectedItem();
             if(selectedBook == null) return;
 
-            //database
-            bookService.sellBook(selectedBook.getId());
-            //view
-            bookView.sellBookOl(selectedBook.getId());
-            bookView.getTableView().refresh();
+            ///database
+            if(bookService.sellBook(selectedBook.getId()) == true) {
+                /// view
+                bookView.sellBookOl(selectedBook.getId());
+                bookView.getTableView().refresh();
+            }
         }
     }
 

@@ -83,7 +83,7 @@ public class BookRepositoryMySql implements BookRepository {
 
 
     @Override
-    public void deleteBook(Book book) {
+    public boolean deleteBook(Book book) {
         String sql = "DELETE FROM Book WHERE title = ? AND author = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, book.getTitle());
@@ -92,6 +92,7 @@ public class BookRepositoryMySql implements BookRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
     @Override
@@ -125,7 +126,7 @@ public class BookRepositoryMySql implements BookRepository {
     }
 
     @Override
-    public void sellBook(long id){
+    public boolean sellBook(long id){
         String sql = "UPDATE book SET number = number - 1 WHERE number > 0 AND id = ?";
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setString(1 , String.valueOf(id));
@@ -133,6 +134,7 @@ public class BookRepositoryMySql implements BookRepository {
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return true;
     }
 
 }
