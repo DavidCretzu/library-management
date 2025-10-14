@@ -30,6 +30,9 @@ public class BookView {
     private Button updateButton;
     private Button deleteButton;
     private Button saveButton;
+    private Button sellButton;
+    private Button addButton;
+
     private final ObservableList<Book> books;
 
     public BookView(Stage primaryStage , List<Book> booksList) {/// no service no logic
@@ -82,8 +85,12 @@ public class BookView {
         updateButton = new Button("Update");
         deleteButton = new Button("Delete");
         saveButton =  new Button("Save");
+        sellButton = new Button ("Sell");
+        addButton = new Button("Add");
 
-        HBox buttonBox = new HBox(10, saveButton, updateButton, deleteButton);
+
+
+        HBox buttonBox = new HBox(10, saveButton, updateButton, deleteButton , sellButton , addButton);
         buttonBox.setAlignment(Pos.CENTER);
         form.add(buttonBox, 0, 5, 2, 1);
 
@@ -110,6 +117,15 @@ public class BookView {
         updateButton.setOnAction(updateButtonListener);
     }
 
+    public void addAddButtonListener(EventHandler<ActionEvent> addButtonListener){
+        addButton.setOnAction(addButtonListener);
+    }
+
+    public void addSellButtonListener(EventHandler<ActionEvent> saleButtonListener){
+        sellButton.setOnAction(saleButtonListener);
+    }
+
+
     public void saveBookOl(Book book){
         this.books.add(book);
     }
@@ -130,6 +146,14 @@ public class BookView {
         }
     }
 
+    public void sellBookOl(long id){
+        for(Book b : books)
+        {
+            if (b.getId() == id){
+                b.setNumber(b.getNumber()-1);
+            }
+        }
+    }
 
 
     public int getIdField() { return Integer.parseInt(idField.toString());} ///wrapper classes and primitive(int vs iNTEGER)

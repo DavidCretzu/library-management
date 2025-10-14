@@ -18,15 +18,12 @@ public class BookController {
         this.bookView.addSaveButtonListener(new SaveButtonListener());
         this.bookView.addDeleteButtonListener(new DeleteButtonListener());
         this.bookView.addUpdateButtonListener(new UpdateButtonListener());
-
+        this.bookView.addSellButtonListener(new SellButtonListener());
     }
 
     private class SaveButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent actionEvent) {
-
-///           Book book  = bookView.getTableView().getSelectionModel().getSelectedItem();   use for update and delete
-
             String title = bookView.getTitleField();
             String author = bookView.getAuthorField();
             LocalDate publishedDate = bookView.getDatePicker();
@@ -76,6 +73,20 @@ public class BookController {
 
             // update in ObservableList / TableView
             bookView.updateBookOl(selectedBook, result);
+        }
+    }
+
+    private class SellButtonListener implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent){
+            Book selectedBook = bookView.getTableView().getSelectionModel().getSelectedItem();
+            if(selectedBook == null) return;
+
+            //database
+            bookService.sellBook(selectedBook.getId());
+            //view
+            bookView.sellBookOl(selectedBook.getId());
+            bookView.getTableView().refresh();
         }
     }
 

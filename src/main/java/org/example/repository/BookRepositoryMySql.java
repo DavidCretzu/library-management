@@ -123,4 +123,16 @@ public class BookRepositoryMySql implements BookRepository {
         }
         return true;
     }
+
+    @Override
+    public void sellBook(long id){
+        String sql = "UPDATE book SET number = number - 1 WHERE number > 0 AND id = ?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1 , String.valueOf(id));
+            stmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }

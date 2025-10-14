@@ -57,4 +57,9 @@ public class BookServiceImpl  implements BookService {
 
         return bookRepository.createBook(book);
     }
+
+    @Override
+    public void sellBook(long id){
+        bookRepository.sellBook(id);
+    }
 }
