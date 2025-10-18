@@ -9,4 +9,5 @@ public interface BookService {
     public boolean deleteBook(Book book);
     public boolean createBook(Book book);
     public boolean sellBook(long id);
+    public boolean addBook(long id);
 }

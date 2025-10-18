@@ -12,4 +12,5 @@ public interface BookRepository {
     public boolean deleteBook(Book book);
     public boolean createBook(Book book);
     public boolean sellBook(long id);
+    public boolean addBook(long id);
 }

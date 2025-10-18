@@ -71,4 +71,13 @@ public class BookServiceImpl  implements BookService {
         }
         return false;
     }
+
+    @Override
+    public boolean addBook(long id){
+        if(bookRepository.addBook(id))
+        {
+            return true;
+        }
+        return false;
+    }
 }

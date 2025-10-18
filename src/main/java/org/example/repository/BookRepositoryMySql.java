@@ -140,4 +140,17 @@ public class BookRepositoryMySql implements BookRepository {
         return true;
     }
 
+    @Override
+    public boolean addBook(long id){
+        String sql = "UPDATE book SET number = number + 1 WHERE id = ?";
+        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setLong(1 , id);
+            stmt.executeUpdate();
+        }catch(SQLException e ){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

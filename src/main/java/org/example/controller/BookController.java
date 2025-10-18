@@ -19,6 +19,8 @@ public class BookController {
         this.bookView.addDeleteButtonListener(new DeleteButtonListener());
         this.bookView.addUpdateButtonListener(new UpdateButtonListener());
         this.bookView.addSellButtonListener(new SellButtonListener());
+        this.bookView.addAddButtonListener(new AddButtonListener());
+
     }
 
     private class SaveButtonListener implements EventHandler<ActionEvent> {
@@ -117,6 +119,27 @@ public class BookController {
                 bookView.showAlert("Success", "Book Sold", "One copy of the book has been sold.");
             } else {
                 bookView.showAlert("Error", "Database Error", "Could not sell the selected book.");
+            }
+        }
+    }
+
+    private class AddButtonListener implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent){
+            Book selectedBook = bookView.getTableView().getSelectionModel().getSelectedItem();
+
+            if(selectedBook == null)
+            {
+                bookView.showAlert("Warning", "No Selection", "Please select a book to add a copy to.");
+                return;
+            }
+            boolean added = bookService.addBook(selectedBook.getId());
+            if(added ){
+                selectedBook.setNumber(selectedBook.getNumber() + 1);
+                bookView.getTableView().refresh();
+                bookView.showAlert("Success", "Book Updated", "One more copy of the book was added.");
+            } else {
+                bookView.showAlert("Error", "Database Error", "Could not add a copy of the selected book.");
             }
         }
     }
