@@ -75,6 +75,7 @@ public class BookRepositoryMySql implements BookRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
         return null; // update failed
     }
@@ -91,6 +92,7 @@ public class BookRepositoryMySql implements BookRepository {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -133,6 +135,7 @@ public class BookRepositoryMySql implements BookRepository {
             stmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
+            return false;
         }
         return true;
     }

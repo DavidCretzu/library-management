@@ -155,6 +155,13 @@ public class BookView {
         }
     }
 
+    public void showAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     public int getIdField() { return Integer.parseInt(idField.toString());} ///wrapper classes and primitive(int vs iNTEGER)
     public String getTitleField() { return titleField.getText(); }

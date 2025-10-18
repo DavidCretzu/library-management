@@ -40,6 +40,10 @@ public class BookController {
 
             if (savedBook) {
                 bookView.saveBookOl(book);
+                bookView.showAlert("Success", "Book Saved", "The book was saved successfully!");
+            }
+            else {
+                bookView.showAlert("Error", "Database Error", "Could not save the book. Please try again.");
             }
         }
     }
@@ -48,10 +52,19 @@ public class BookController {
         @Override
         public void handle(ActionEvent actionEvent) {
             Book delBook = bookView.getTableView().getSelectionModel().getSelectedItem();
+            if (delBook == null) {
+                bookView.showAlert("Warning", "No Selection", "Please select a book to delete.");
+                return;
+            }
 
             if(bookService.deleteBook(delBook) == true){
                 bookView.deleteBookOl(delBook);
+                bookView.showAlert("Success", "Book Deleted", "The selected book was deleted successfully!");
             }
+            else{
+                bookView.showAlert("Error", "Database Error", "Could not delete the selected book.");
+            }
+
         }
     }
 
@@ -59,9 +72,15 @@ public class BookController {
         @Override
         public void handle(ActionEvent actionEvent) {
             Book selectedBook = bookView.getTableView().getSelectionModel().getSelectedItem();
-            if (selectedBook == null) return; // nothing selected
-
-            // build updated book from input fields
+            if (selectedBook == null) {
+                bookView.showAlert("Warning", "No Selection", "Please select a book to update.");
+                return;
+            }
+            if ( bookView.getAuthorField() == null || bookView.getTitleField() == null || bookView.getDatePicker() == null || bookView.getNumberSpinner() == 0) {
+                bookView.showAlert("Warning", "Missing Data", "Please fill in all fields before updating.");
+                return;
+            }
+            /// build updated book from input
             Book updatedBook = new BookBuilder()
                     .setTitle(bookView.getTitleField())
                     .setAuthor(bookView.getAuthorField())
@@ -69,11 +88,16 @@ public class BookController {
                     .setNumber(bookView.getNumberSpinner())
                     .build();
 
-            // update in database
+
+            /// update in database
             Book result = bookService.updateBook(updatedBook, selectedBook.getId());
 
-            // update in ObservableList / TableView
-            bookView.updateBookOl(selectedBook, result);
+            if (result != null) {
+                bookView.updateBookOl(selectedBook, result);
+                bookView.showAlert("Success", "Book Updated", "The book was updated successfully!");
+            } else {
+                bookView.showAlert("Error", "Database Error", "Could not update the selected book.");
+            }
         }
     }
 
@@ -81,13 +105,18 @@ public class BookController {
         @Override
         public void handle(ActionEvent actionEvent){
             Book selectedBook = bookView.getTableView().getSelectionModel().getSelectedItem();
-            if(selectedBook == null) return;
+            if (selectedBook == null) {
+                bookView.showAlert("Warning", "No Selection", "Please select a book to sell.");
+                return;
+            }
 
-            ///database
-            if(bookService.sellBook(selectedBook.getId()) == true) {
-                /// view
+            boolean sold = bookService.sellBook(selectedBook.getId());
+            if (sold) {
                 bookView.sellBookOl(selectedBook.getId());
                 bookView.getTableView().refresh();
+                bookView.showAlert("Success", "Book Sold", "One copy of the book has been sold.");
+            } else {
+                bookView.showAlert("Error", "Database Error", "Could not sell the selected book.");
             }
         }
     }
