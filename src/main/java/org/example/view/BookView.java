@@ -150,7 +150,11 @@ public class BookView {
         for(Book b : books)
         {
             if (b.getId() == id){
-                b.setNumber(b.getNumber()-1);
+                if(id > 0)
+                    b.setNumber(b.getNumber()-1);
+                else{
+                    return;
+                }
             }
         }
     }

@@ -111,7 +111,10 @@ public class BookController {
                 bookView.showAlert("Warning", "No Selection", "Please select a book to sell.");
                 return;
             }
-
+            if(selectedBook.getNumber() <= 0){
+                bookView.showAlert("Info" , "Out of Stock" , "This book is out of stock and cannot be sold. ");
+                return;
+            }
             boolean sold = bookService.sellBook(selectedBook.getId());
             if (sold) {
                 bookView.sellBookOl(selectedBook.getId());
