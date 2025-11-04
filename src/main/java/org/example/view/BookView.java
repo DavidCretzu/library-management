@@ -145,7 +145,7 @@ public class BookView {
             }
         }
     }
-
+    /// class with 2 static mehthods for update and sell instead of this logic
     public void sellBookOl(long id){
         for(Book b : books)
         {

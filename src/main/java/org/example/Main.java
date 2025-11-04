@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.example.database.JDBConnectionWrapper;
 import org.example.launcher.BookLauncherSingleton;
+import org.example.launcher.UserLauncherSingleton;
 import org.example.model.Book;
 import org.example.repository.BookRepository;
 import org.example.repository.BookRepositoryMySql;
@@ -24,6 +25,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        BookLauncherSingleton.getInstance(stage);
+        UserLauncherSingleton.getInstance(stage); ///comment and do login view instead
     }
 }

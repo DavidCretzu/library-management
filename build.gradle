@@ -21,9 +21,15 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
+    implementation 'org.mindrot:jbcrypt:0.4'
     // MySQL connector
     implementation 'com.mysql:mysql-connector-j:8.4.0'
     runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
+
+    // --- AI + HTTP + JSON ---
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'    // HTTP client for API calls
+    implementation 'org.json:json:20240303'                 // JSON parsing (simple and lightweight)
+
 }
 
 application { mainClass = 'org.example.Main' }
