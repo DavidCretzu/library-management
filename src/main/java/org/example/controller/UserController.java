@@ -37,10 +37,10 @@ public class UserController {
     private class RegisterButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent actionEvent){
-            String userName = userView.getLoginUsernameField().getText();
+            String userName = userView.getRegisterUsernameField().getText();
             String password = userView.getRegisterPasswordField().getText();
             String confirmPassword = userView.getRegisterConfirmPasswordField().getText();
-            if(confirmPassword != password)
+            if(!confirmPassword.equals(password))
                 userView.showAlert("ERROR" , "Register not Successful" , "Password must match!");
 
             if(userService.register(userName , password)) ///check uniqueness in service or repository

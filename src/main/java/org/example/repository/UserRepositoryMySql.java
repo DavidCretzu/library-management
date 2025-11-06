@@ -46,30 +46,21 @@ public class UserRepositoryMySql implements UserRepository {
         }catch(SQLException e){
             return false;
         }
-        System.out.println("Merge sql , merge repository a gasit user");
         return false;
     }
 
     @Override
     public boolean register(String userName , String password ){
-        String sql = "INSERT INTO user (username , password) VALUES (username = ? , password = ?) ";
+        String sql = "INSERT INTO user (username , password) VALUES ( ? , ?) ";
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1 , userName);
             statement.setString(2 , password);
-            ResultSet resultSet = statement.executeQuery(sql);
 
-            if(resultSet.next()){
-                return true;
-            }
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
         }catch(SQLException e){
+            e.printStackTrace();
             return false;
         }
-
-        return false;
     }
-
-//    @Override
-//    public boolean saveUser(){
-//        String sql = ""
-//    }
 }
