@@ -51,7 +51,7 @@ public class UserLauncherSingleton {
         UserView view = new UserView(stage , users);
         this.userView = view;
 
-        UserController controller = new UserController(userService , userView);///cb
+        UserController controller = new UserController(userService , userView , stage);///cb
         this.userController = controller;
     }
 

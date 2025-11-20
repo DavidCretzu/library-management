@@ -25,6 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        UserLauncherSingleton.getInstance(stage); ///comment and do login view instead
+
+        UserLauncherSingleton.getInstance(stage);
     }
 }

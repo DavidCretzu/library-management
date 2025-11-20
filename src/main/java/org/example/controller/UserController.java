@@ -2,6 +2,8 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import org.example.launcher.BookLauncherSingleton;
 import org.example.mapper.UserBuilder;
 import org.example.model.User;
 import org.example.service.UserService;
@@ -12,13 +14,15 @@ import javax.swing.*;
 public class UserController {
     private final UserService userService;
     private final UserView userView;
+    private final Stage stage;
 
-    public UserController(UserService userService , UserView userView)
+    public UserController(UserService userService , UserView userView , Stage stage)
     {
         this.userService = userService;
         this.userView = userView;
         this.userView.addLoginButtonListener(new LoginButtonListener());
         this.userView.addRegisterButtonListener(new RegisterButtonListener());
+        this.stage = stage;
     }
 
     private class LoginButtonListener implements EventHandler<ActionEvent> {
@@ -28,9 +32,14 @@ public class UserController {
             String password = userView.getLoginPasswordField().getText();
 
             if(userService.login(userName , password))
-                userView.showAlert("COMPLETED" , "Login Successful"  , "You have logged in successful!" );
+                stageUpdate();
             else
                 userView.showAlert("ERROR" , "Login not successful" , "Password or username is incorrect!");
+        }
+        private void stageUpdate(){
+            stage.close();
+            Stage bookStage = new Stage();
+            BookLauncherSingleton.getInstance(bookStage);
         }
     }
 
