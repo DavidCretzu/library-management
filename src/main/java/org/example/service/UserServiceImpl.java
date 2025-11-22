@@ -28,4 +28,8 @@ public class UserServiceImpl implements UserService{
            return true;
        return false;
     }
+
+//    public boolean checkUserUniqueness(String userName){
+//
+//    }
 }

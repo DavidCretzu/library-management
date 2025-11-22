@@ -63,4 +63,8 @@ public class UserRepositoryMySql implements UserRepository {
             return false;
         }
     }
+
+//    public boolean checkUserUniqueness(String userName){
+//        String sql = ""
+//    }
 }
